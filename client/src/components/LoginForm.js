@@ -27,7 +27,7 @@ function LoginForm(props){
                     type='password' onChange={props.handleChange}
                     name="password"
                     value={props.login.password}/>
-            <Button color='teal' fluid size='large' type="submit">Login</Button>
+            <Button color='blue' fluid size='large' type="submit">Login</Button>
           </Form>
         </Grid.Row>
       </Grid>
