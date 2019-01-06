@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :update, :destroy, :mine]
+  before_action :authenticate_user, only: [:create, :upate, :destroy, :mine]
 
   # GET /messages
   def index
@@ -16,9 +17,11 @@ class MessagesController < ApplicationController
   # POST /messages
   def create
     puts message_params
+    puts current_user
     @message = current_user.messages.new(message_params)
 
     if @message.save
+      # ActionCable.server.broadcast 'conversations_channel', @message
       render json: @message, status: :created, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity

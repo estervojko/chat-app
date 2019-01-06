@@ -1,9 +1,17 @@
 import React, { Component } from 'react'
+import MessageList from './MessageList'
+import MessageForm from './MessageForm'
 
 class Chatroom extends Component{
   render(){
     return(
-      <h2>Welcome to the chatroom</h2>
+      <div>
+        <h2>Welcome to the chatroom</h2>
+        <MessageList/>
+        <MessageForm handleMessageChange={this.props.handleMessageChange}
+                     message={this.props.message}
+                     handleMessageSubmit={this.props.handleMessageSubmit}/>
+      </div>
     )
   }
 }
