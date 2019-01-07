@@ -32,6 +32,7 @@ class App extends Component {
 
     this.handleMessageChange = this.handleMessageChange.bind(this)
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
+    this.handleReceivedMessage = this.handleReceivedMessage.bind(this)
   }
 
   async componentDidMount(){
@@ -81,10 +82,20 @@ class App extends Component {
   //handle submitted message
   async handleMessageSubmit(e){
     e.preventDefault();
-    const msg = await axios.post(`${API_ROOT}/messages`,
+    const msg = await axios.post(`/api/messages`,
       { message: this.state.message},
       { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}})
     console.log(msg.data)
+  }
+
+  //handle broadcasted message
+  handleReceivedMessage(response){
+    console.log("what", response)
+    this.setState((prevState) => (
+      {
+        messages: [...prevState.messages, response]
+      })
+    )
   }
 
   render() {
@@ -95,7 +106,8 @@ class App extends Component {
           <Route exact path="/" render={() => (<Chatroom handleMessageChange={this.handleMessageChange}
                                                          message={this.state.message}
                                                          messages={this.state.messages}
-                                                         handleMessageSubmit={this.handleMessageSubmit}/>)}/>
+                                                         handleMessageSubmit={this.handleMessageSubmit}
+                                                         handleReceivedMessage={this.handleReceivedMessage}/>)}/>
           <Route path="/auth" component={AuthForms}/>
           <Route path="/profile" component={Profile} />
         </div>

@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
     @message = current_user.messages.new(message_params)
 
     if @message.save
-      # ActionCable.server.broadcast 'conversations_channel', @message
+      ActionCable.server.broadcast 'messages_channel', @message
       render json: @message, status: :created, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity
