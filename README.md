@@ -1,24 +1,14 @@
-# README
+Chat App using Web Sockets.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+For the final project, I'd like to do a basic chat application, using web sockets protocols, and semantic-ui for the design.
 
-Things you may want to cover:
+- It will have users, chatrooms and messages.
+- Users register, and login. They can create chatrooms, delete the ones they create, and participate in specific chatrooms by writing messages.
 
-* Ruby version
+Post-MVP: I could make a video chat app.
 
-* System dependencies
+Note: Yesterday I did a basic tutorial on ActionCable, which is the way rails implements websockets. My repo can be found here:
 
-* Configuration
+https://git.generalassemb.ly/estervojkollari/my-app-api
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+I did this yesterday to see if I would be able to get to MVP by Thursday, and it seems doable
