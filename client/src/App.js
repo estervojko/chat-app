@@ -26,11 +26,20 @@ class App extends Component {
       },
       message : {
         content: ''
-      }
+      },
+      messages: []
     }
 
     this.handleMessageChange = this.handleMessageChange.bind(this)
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
+  }
+
+  async componentDidMount(){
+    const msgs = await axios.get(`${API_ROOT}/messages`)
+    console.log(msgs.data);
+    this.setState({
+      messages: msgs.data
+    })
   }
 
   //handle login form input fields
@@ -70,15 +79,13 @@ class App extends Component {
   }
 
   //handle submitted message
-  // handleMessageSubmit(e){
-  //   e.preventDefault();
-  //   const msg = axios.post(
-  //     {
-  //       baseURL: `${API_ROOT}/messages`,
-  //
-  //     }{ message: this.state.message })
-  //   console.log(msg)
-  // }
+  async handleMessageSubmit(e){
+    e.preventDefault();
+    const msg = await axios.post(`${API_ROOT}/messages`,
+      { message: this.state.message},
+      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}})
+    console.log(msg.data)
+  }
 
   render() {
     return (
@@ -87,6 +94,7 @@ class App extends Component {
           <Navbar />
           <Route exact path="/" render={() => (<Chatroom handleMessageChange={this.handleMessageChange}
                                                          message={this.state.message}
+                                                         messages={this.state.messages}
                                                          handleMessageSubmit={this.handleMessageSubmit}/>)}/>
           <Route path="/auth" component={AuthForms}/>
           <Route path="/profile" component={Profile} />

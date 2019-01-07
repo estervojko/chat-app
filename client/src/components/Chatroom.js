@@ -7,7 +7,7 @@ class Chatroom extends Component{
     return(
       <div>
         <h2>Welcome to the chatroom</h2>
-        <MessageList/>
+        <MessageList messages={this.props.messages}/>
         <MessageForm handleMessageChange={this.props.handleMessageChange}
                      message={this.props.message}
                      handleMessageSubmit={this.props.handleMessageSubmit}/>
