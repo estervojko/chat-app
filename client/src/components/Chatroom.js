@@ -10,6 +10,9 @@ class Chatroom extends Component{
     return(
       <div>
         <h2>Welcome to the chatroom</h2>
+        {this.props.chatrooms.map(room => (
+          <p key={room.id} onClick={() => {this.props.loadChatMessages(room.id)}}>{room.title}</p>
+        ))}
         <MessageList messages={this.props.messages}/>
         <ActionCable channel={{channel: "MessagesChannel"}}
                      onReceived={this.props.handleReceivedMessage}/>

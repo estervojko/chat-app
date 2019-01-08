@@ -4,8 +4,13 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    @messages = Message.all
-
+    puts params.inspect
+    if !(params[:chatroom_id].present?)
+      @messages = Message.all
+    else
+      @messages = Message.where(chatroom_id: params[:chatroom_id])
+      puts @messages.inspect
+    end
     render json: @messages
   end
 
@@ -57,6 +62,6 @@ class MessagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def message_params
-      params.require(:message).permit(:content)
+      params.require(:message).permit(:content, :chatroom_id)
     end
 end

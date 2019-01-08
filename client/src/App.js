@@ -27,19 +27,23 @@ class App extends Component {
       message : {
         content: ''
       },
-      messages: []
+      messages: [],
+      chatrooms: []
     }
 
     this.handleMessageChange = this.handleMessageChange.bind(this)
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
     this.handleReceivedMessage = this.handleReceivedMessage.bind(this)
+    this.loadChatMessages = this.loadChatMessages.bind(this)
   }
 
   async componentDidMount(){
-    const msgs = await axios.get(`${API_ROOT}/messages`)
+    const msgs = await axios.get(`${API_ROOT}/chatrooms/1/messages`)
+    const chats = await axios.get(`${API_ROOT}/chatrooms`)
     console.log(msgs.data);
     this.setState({
-      messages: msgs.data
+      messages: msgs.data,
+      chatrooms: chats.data
     })
   }
 
@@ -98,12 +102,26 @@ class App extends Component {
     )
   }
 
+  //load messages of the chatroom sent from id
+  async loadChatMessages(id){
+    console.log("what")
+    const chatMsgs = await axios.get(`/api/chatrooms/${id}/messages`)
+    console.log(chatMsgs.data)
+    this.setState(
+      {
+        messages: chatMsgs.data
+      }
+    )
+  }
+
   render() {
     return (
       <Router>
         <div className="App">
           <Navbar />
-          <Route exact path="/" render={() => (<Chatroom handleMessageChange={this.handleMessageChange}
+          <Route exact path="/" render={() => (<Chatroom loadChatMessages={this.loadChatMessages}
+                                                         chatrooms={this.state.chatrooms}
+                                                         handleMessageChange={this.handleMessageChange}
                                                          message={this.state.message}
                                                          messages={this.state.messages}
                                                          handleMessageSubmit={this.handleMessageSubmit}
