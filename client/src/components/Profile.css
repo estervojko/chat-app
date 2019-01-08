@@ -1,0 +1,10 @@
+html, body{
+    height: 100%;
+}
+
+.UserInfo {
+  width: 100%;
+  height: auto;
+  margin: 100px;
+  border: 1px solid grey;
+}
