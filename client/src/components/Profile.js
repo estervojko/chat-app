@@ -26,6 +26,7 @@ class Profile extends Component {
       user: {
         profile_pic: ''
       },
+      user_profile_pic: '',
       redirectToAuth: false
     }
     this.logOut = this.logOut.bind(this);
@@ -33,12 +34,29 @@ class Profile extends Component {
     this.handleLinkChange = this.handleLinkChange.bind(this);
   }
   async componentDidMount() {
-    console.log(jwtDecode(localStorage.getItem('token')).sub);
+    try {
+      console.log("gets here")
+      const userToken = localStorage.getItem('token');
+      if(userToken){
+        // const userDecoded = jwtDecode(userToken)
+        const userPic = await axios.get(`/api/users/${jwtDecode(localStorage.getItem('token')).sub}`)
+        this.setState(prevState => (
+          {
+            ...prevState,
+            user_profile_pic: userPic.data.profile_pic
+          }
+        ))
+      }
+    }
+    catch(e){
+      console.log(e)
+    }
     // const messages = await getMyMessages();
     // this.setState({
     //   messages
     // })
   }
+
   logOut(e) {
     localStorage.removeItem('token');
     this.setState({
@@ -48,20 +66,31 @@ class Profile extends Component {
 
   //handle update. Initially to update the picture
   handleLinkChange(e){
-    const {name, value} = e.target
+    const {value} = e.target
     this.setState(prevState => (
       {
+        ...prevState,
         user : {
-          ...prevState.user,
-          [name]: value
+          profile_pic: value
         }
       }
     ))
   }
 
-  async handleUpdate(e){
-    const pic = await axios.put(`${API_ROOT}/users/${jwtDecode(localStorage.getItem('token')).sub}`, this.state.user)
-    console.log(pic);
+  async handleUpdate(){
+    try {
+      const userPic = this.state.user.profile_pic;
+      console.log(userPic);
+      this.setState((
+        {
+          user_profile_pic: userPic
+        }
+      ))
+      const pic = await axios.put(`${API_ROOT}/users/${jwtDecode(localStorage.getItem('token')).sub}`, this.state.user)
+    }
+    catch(err){
+      console.log(err)
+    }
   }
 
   render() {
@@ -76,7 +105,7 @@ class Profile extends Component {
           <Grid.Row centered columns={4} >
             <Grid.Column>
               <Card
-                // image='/images/avatar/large/elliot.jpg'
+                image={this.state.user_profile_pic}
                 header='Ester Vojkollari'
                 meta='Friend'
                 description='Ester is a very nice person. Nice person that does nice things. '

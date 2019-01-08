@@ -5,7 +5,6 @@ async function login(credentials){
         {
           "auth": credentials
         });
-    console.log(token.data);
     return token.data
 }
 
