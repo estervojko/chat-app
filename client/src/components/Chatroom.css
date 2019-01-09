@@ -1,0 +1,14 @@
+.Grid {
+  height: 80vh;
+}
+
+.MessageList {
+  /* border: 1px solid black; */
+  height: 45vh;
+  overflow: hidden;
+}
+
+.MessageForm {
+  /* border: 1px solid pink; */
+  margin-top: 25px;
+}

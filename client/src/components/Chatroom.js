@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import MessageList from './MessageList'
 import MessageForm from './MessageForm'
+import './Chatroom.css'
 
-import { Container, Segment, Grid, List } from 'semantic-ui-react'
+import { Header, Container, Segment, Grid, List } from 'semantic-ui-react'
 
 
 import { ActionCable } from 'react-actioncable-provider';
@@ -11,11 +12,10 @@ import { ActionCable } from 'react-actioncable-provider';
 class Chatroom extends Component{
   render(){
     return(
-      <div>
         <Container>
-          <h2>Welcome to the chatroom</h2>
-          <Grid>
-            <Grid.Row>
+          <Header as='h1'>Welcome to the chatroom</Header>
+          <Grid className="Grid">
+            <Grid.Row >
               <Grid.Column width={4} stretched>
                 <Segment raised>
                   <List animated verticalAlign='middle'>
@@ -29,20 +29,27 @@ class Chatroom extends Component{
                   </List>
                 </Segment>
               </Grid.Column>
-              <Grid.Column width={12}>
+              <Grid.Column width={12} stretched padded>
                 <Segment raised>
-                  <MessageList messages={this.props.messages}/>
-                  <ActionCable channel={{channel: "MessagesChannel"}}
-                               onReceived={this.props.handleReceivedMessage}/>
-                  <MessageForm handleMessageChange={this.props.handleMessageChange}
-                               message={this.props.message}
-                               handleMessageSubmit={this.props.handleMessageSubmit}/>
+                  <Grid>
+                    <Grid.Row className="MessageList">
+                      <MessageList messages={this.props.messages}/>
+                      <ActionCable channel={{channel: "MessagesChannel"}}
+                                   onReceived={this.props.handleReceivedMessage}/>
+                    </Grid.Row>
+                    <Grid.Row className="MessageForm">
+                        <Grid.Column width="16">
+                          <MessageForm handleMessageChange={this.props.handleMessageChange}
+                                       message={this.props.message}
+                                       handleMessageSubmit={this.props.handleMessageSubmit}/>
+                        </Grid.Column>
+                    </Grid.Row>
+                  </Grid>
                 </Segment>
               </Grid.Column>
             </Grid.Row>
           </Grid>
         </Container>
-      </div>
     )
   }
 }
