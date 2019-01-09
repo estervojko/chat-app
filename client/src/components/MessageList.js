@@ -15,7 +15,7 @@ export default class MessageList extends Component{
           <Comment.Group className="MessageSection">
             {this.props.messages.map(msg => (
               <Comment key={msg.id}>
-                <Comment.Avatar as='a' src='/images/avatar/small/joe.jpg' />
+                <Comment.Avatar as='a' src='/whwhwhw/joe.jpg' />
                 <Comment.Content>
                   <Comment.Author as='a'>
                     Some Specific User

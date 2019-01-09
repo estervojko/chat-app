@@ -20,7 +20,7 @@ class Chatroom extends Component{
                 <Segment raised>
                   <List animated verticalAlign='middle'>
                     {this.props.chatrooms.map(room => (
-                      <List.Item>
+                      <List.Item key={room.id}>
                         <List.Content>
                           <List.Header key={room.id} onClick={() => {this.props.loadChatMessages(room.id)}}>{room.title}</List.Header>
                         </List.Content>
@@ -29,7 +29,7 @@ class Chatroom extends Component{
                   </List>
                 </Segment>
               </Grid.Column>
-              <Grid.Column width={12} stretched padded>
+              <Grid.Column width={12} stretched>
                 <Segment raised>
                   <Grid>
                     <Grid.Row className="MessageList">
