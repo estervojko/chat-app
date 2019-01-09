@@ -28,7 +28,8 @@ class App extends Component {
         content: ''
       },
       messages: [],
-      chatrooms: []
+      chatrooms: [],
+      activeRoom: 1
     }
 
     this.handleMessageChange = this.handleMessageChange.bind(this)
@@ -38,7 +39,7 @@ class App extends Component {
   }
 
   async componentDidMount(){
-    const msgs = await axios.get(`${API_ROOT}/chatrooms/1/messages`)
+    const msgs = await axios.get(`${API_ROOT}/chatrooms/${this.state.activeRoom}/messages`)
     const chats = await axios.get(`${API_ROOT}/chatrooms`)
     console.log(msgs.data);
     this.setState({
@@ -86,20 +87,26 @@ class App extends Component {
   //handle submitted message
   async handleMessageSubmit(e){
     e.preventDefault();
-    const msg = await axios.post(`/api/messages`,
-      { message: this.state.message},
+    const msg = await axios.post(`/api/chatrooms/${this.state.activeRoom}/messages`,
+      { message:
+        {
+          content: this.state.message.content,
+          chatroom_id: this.state.activeRoom
+        }
+      },
       { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}})
     console.log(msg.data)
   }
 
   //handle broadcasted message
   handleReceivedMessage(response){
-    console.log("what", response)
-    this.setState((prevState) => (
-      {
-        messages: [...prevState.messages, response]
-      })
-    )
+    if( this.state.activeRoom === response.chatroom_id){
+      this.setState((prevState) => (
+        {
+          messages: [...prevState.messages, response]
+        })
+      )
+    }
   }
 
   //load messages of the chatroom sent from id
@@ -109,7 +116,8 @@ class App extends Component {
     console.log(chatMsgs.data)
     this.setState(
       {
-        messages: chatMsgs.data
+        messages: chatMsgs.data,
+        activeRoom: id
       }
     )
   }

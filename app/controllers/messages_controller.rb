@@ -21,13 +21,14 @@ class MessagesController < ApplicationController
 
   # POST /messages
   def create
-    puts message_params
-    puts current_user
+    puts params.inspect
+    puts message_params.inspect
+    puts current_user.inspect
     @message = current_user.messages.new(message_params)
 
     if @message.save
       ActionCable.server.broadcast 'messages_channel', @message
-      render json: @message, status: :created, location: @message
+      # render json: @message, status: :created, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity
     end
