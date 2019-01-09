@@ -11,7 +11,7 @@ export default class MessageForm extends Component{
   render(){
     return (
       <div>
-        <Form onSubmit={this.props.handleMessageSubmit}>
+        <Form reply onSubmit={this.props.handleMessageSubmit}>
           <h4>This is the message form</h4>
           <Form.TextArea className="TextArea" onChange={this.props.handleMessageChange}
                     name="content"

@@ -4,11 +4,10 @@
 
 .MessageList {
   /* border: 1px solid black; */
-  height: 45vh;
-  overflow: hidden;
+  height: 50vh;
+  overflow: scroll;
 }
 
 .MessageForm {
   /* border: 1px solid pink; */
-  margin-top: 25px;
 }
