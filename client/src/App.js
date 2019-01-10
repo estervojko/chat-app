@@ -102,17 +102,16 @@ class App extends Component {
 
   //handle broadcasted message
   handleReceivedMessage(response){
-    let userDecoded;
-    if(localStorage.getItem("token")){
-      userDecoded = jwtDecode(localStorage.getItem("token"))
-      console.log("uaerrrrdecodd", userDecoded);
-    }
+    // let userDecoded;
+    // if(localStorage.getItem("token")){
+    //   userDecoded = jwtDecode(localStorage.getItem("token"))
+    //   console.log("uaerrrrdecodd", userDecoded);
+    // }
+    console.log(response)
     if( this.state.activeRoom === response.chatroom_id){
-      const msgUser = Object.assign(response, {user: userDecoded})
-      console.log("msguser", msgUser)
       this.setState((prevState) => (
         {
-          messages: [...prevState.messages, msgUser]
+          messages: [...prevState.messages, response]
         })
       )
     }
