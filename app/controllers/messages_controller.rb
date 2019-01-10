@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :update, :destroy, :mine]
   before_action :authenticate_user, only: [:create, :upate, :destroy, :mine]
+  attr_accessor :message
 
   # GET /messages
   def index
@@ -25,7 +26,8 @@ class MessagesController < ApplicationController
     @message = current_user.messages.new(message_params)
 
     if @message.save
-      ActionCable.server.broadcast 'messages_channel', @message
+      msg = @message.attributes
+      ActionCable.server.broadcast 'messages_channel', msg.merge!(:user => current_user)
       # render json: @message, status: :created, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity
