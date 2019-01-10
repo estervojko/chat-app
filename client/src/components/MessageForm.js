@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import './MessageForm.css'
+
+import {Form, Button} from 'semantic-ui-react'
 
 export default class MessageForm extends Component{
   constructor(props){
@@ -8,14 +11,13 @@ export default class MessageForm extends Component{
   render(){
     return (
       <div>
-        <form onSubmit={this.props.handleMessageSubmit}>
+        <Form reply onSubmit={this.props.handleMessageSubmit}>
           <h4>This is the message form</h4>
-          <textarea onChange={this.props.handleMessageChange}
+          <Form.TextArea className="TextArea" onChange={this.props.handleMessageChange}
                     name="content"
                     value={this.props.message.content}/>
-          <br></br>
-          <button type="submit">Post</button>
-        </form>
+          <Button className="PostButton" type="submit" floated="right">Post</Button>
+        </Form>
       </div>
     )
   }

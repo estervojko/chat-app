@@ -12,7 +12,8 @@ class AuthForms extends Component {
         email: '',
         password: ''
       },
-      redirectToProfile: false
+      redirectToProfile: false,
+      loggedIn: false
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -22,8 +23,16 @@ class AuthForms extends Component {
     e.preventDefault();
     const tokenData = await login(this.state.credentials);
     console.log(tokenData);
-    localStorage.setItem('token', tokenData.jwt);
-    this.setState({ redirectToProfile: true});
+    if(tokenData) {
+      localStorage.setItem('token', tokenData.jwt);
+      this.setState(
+        {
+          redirectToProfile: true,
+          loggedIn: true
+        }
+      );
+
+    }
   }
 
 

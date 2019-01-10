@@ -7,7 +7,7 @@ function LoginForm(props){
     <div className="login">
       <Grid style={{ height: '100%' }} verticalAlign='middle' centered>
         <Grid.Row centered>
-          <Form style={{ width: 450}} onSubmit={props.handleLogin}>
+          <Form style={{ maxWidth: 450, minWidth: 250}} onSubmit={props.handleLogin}>
             <h2>Login</h2>
             <h5>Email</h5>
             <Form.Input

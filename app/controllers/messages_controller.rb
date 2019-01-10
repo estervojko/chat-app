@@ -4,9 +4,12 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    @messages = Message.all
-
-    render json: @messages
+    if !(params[:chatroom_id].present?)
+      @messages = Message.all
+    else
+      @messages = Message.where(chatroom_id: params[:chatroom_id])
+    end
+    render json: @messages, :include => :user
   end
 
   # GET /messages/1
@@ -16,13 +19,14 @@ class MessagesController < ApplicationController
 
   # POST /messages
   def create
-    puts message_params
-    puts current_user
+    puts params.inspect
+    puts message_params.inspect
+    puts current_user.inspect
     @message = current_user.messages.new(message_params)
 
     if @message.save
       ActionCable.server.broadcast 'messages_channel', @message
-      render json: @message, status: :created, location: @message
+      # render json: @message, status: :created, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity
     end
@@ -57,6 +61,6 @@ class MessagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def message_params
-      params.require(:message).permit(:content)
+      params.require(:message).permit(:content, :chatroom_id)
     end
 end

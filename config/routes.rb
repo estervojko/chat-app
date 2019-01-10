@@ -2,9 +2,11 @@ Rails.application.routes.draw do
   scope '/api' do
     post 'user_token' => 'user_token#create'
     resources :users
-    resources :messages do
-      collection do
-        get 'mine'
+    resources :chatrooms do
+      resources :messages do
+        collection do
+          get 'mine'
+        end
       end
     end
     mount ActionCable.server => '/cable'

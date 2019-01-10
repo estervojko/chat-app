@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import Chatroom from './components/Chatroom';
 
+import jwtDecode from 'jwt-decode'
+
 import { API_ROOT } from './services/url';
 
 class App extends Component {
@@ -27,19 +29,24 @@ class App extends Component {
       message : {
         content: ''
       },
-      messages: []
+      messages: [],
+      chatrooms: [],
+      activeRoom: 1
     }
 
     this.handleMessageChange = this.handleMessageChange.bind(this)
     this.handleMessageSubmit = this.handleMessageSubmit.bind(this)
     this.handleReceivedMessage = this.handleReceivedMessage.bind(this)
+    this.loadChatMessages = this.loadChatMessages.bind(this)
   }
 
   async componentDidMount(){
-    const msgs = await axios.get(`${API_ROOT}/messages`)
+    const msgs = await axios.get(`${API_ROOT}/chatrooms/${this.state.activeRoom}/messages`)
+    const chats = await axios.get(`${API_ROOT}/chatrooms`)
     console.log(msgs.data);
     this.setState({
-      messages: msgs.data
+      messages: msgs.data,
+      chatrooms: chats.data
     })
   }
 
@@ -82,19 +89,45 @@ class App extends Component {
   //handle submitted message
   async handleMessageSubmit(e){
     e.preventDefault();
-    const msg = await axios.post(`/api/messages`,
-      { message: this.state.message},
+    const msg = await axios.post(`/api/chatrooms/${this.state.activeRoom}/messages`,
+      { message:
+        {
+          content: this.state.message.content,
+          chatroom_id: this.state.activeRoom
+        }
+      },
       { headers: { Authorization: `Bearer ${localStorage.getItem('token')}`}})
     console.log(msg.data)
   }
 
   //handle broadcasted message
   handleReceivedMessage(response){
-    console.log("what", response)
-    this.setState((prevState) => (
+    let userDecoded;
+    if(localStorage.getItem("token")){
+      userDecoded = jwtDecode(localStorage.getItem("token"))
+      console.log("uaerrrrdecodd", userDecoded);
+    }
+    if( this.state.activeRoom === response.chatroom_id){
+      const msgUser = Object.assign(response, {user: userDecoded})
+      console.log("msguser", msgUser)
+      this.setState((prevState) => (
+        {
+          messages: [...prevState.messages, msgUser]
+        })
+      )
+    }
+  }
+
+  //load messages of the chatroom sent from id
+  async loadChatMessages(id){
+    console.log("what")
+    const chatMsgs = await axios.get(`/api/chatrooms/${id}/messages`)
+    console.log(chatMsgs.data)
+    this.setState(
       {
-        messages: [...prevState.messages, response]
-      })
+        messages: chatMsgs.data,
+        activeRoom: id
+      }
     )
   }
 
@@ -103,7 +136,9 @@ class App extends Component {
       <Router>
         <div className="App">
           <Navbar />
-          <Route exact path="/" render={() => (<Chatroom handleMessageChange={this.handleMessageChange}
+          <Route exact path="/" render={() => (<Chatroom loadChatMessages={this.loadChatMessages}
+                                                         chatrooms={this.state.chatrooms}
+                                                         handleMessageChange={this.handleMessageChange}
                                                          message={this.state.message}
                                                          messages={this.state.messages}
                                                          handleMessageSubmit={this.handleMessageSubmit}
