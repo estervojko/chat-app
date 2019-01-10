@@ -8,6 +8,8 @@ import Navbar from './components/Navbar';
 import Profile from './components/Profile';
 import Chatroom from './components/Chatroom';
 
+import jwtDecode from 'jwt-decode'
+
 import { API_ROOT } from './services/url';
 
 class App extends Component {
@@ -100,10 +102,17 @@ class App extends Component {
 
   //handle broadcasted message
   handleReceivedMessage(response){
+    let userDecoded;
+    if(localStorage.getItem("token")){
+      userDecoded = jwtDecode(localStorage.getItem("token"))
+      console.log("uaerrrrdecodd", userDecoded);
+    }
     if( this.state.activeRoom === response.chatroom_id){
+      const msgUser = Object.assign(response, {user: userDecoded})
+      console.log("msguser", msgUser)
       this.setState((prevState) => (
         {
-          messages: [...prevState.messages, response]
+          messages: [...prevState.messages, msgUser]
         })
       )
     }

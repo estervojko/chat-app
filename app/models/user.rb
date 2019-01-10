@@ -8,6 +8,7 @@ class User < ApplicationRecord
     {
         sub: id,
         email: email,
+        name: name,
         profile_pic: profile_pic
     }
   end

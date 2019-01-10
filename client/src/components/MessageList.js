@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './MessageList.css'
 
 import { Icon, Comment} from 'semantic-ui-react'
+import jwtDecode from 'jwt-decode'
 
 export default class MessageList extends Component{
   constructor(props){
@@ -9,6 +10,10 @@ export default class MessageList extends Component{
   }
 
   render(){
+    if(localStorage.getItem("token")){
+      const userDecoded = jwtDecode(localStorage.getItem("token"))
+      console.log(userDecoded);
+    }
     return (
       <div>
         <h4>This is the message list</h4>
