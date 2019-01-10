@@ -15,10 +15,10 @@ export default class MessageList extends Component{
           <Comment.Group className="MessageSection">
             {this.props.messages.map(msg => (
               <Comment key={msg.id}>
-                <Comment.Avatar as='a' src='/whwhwhw/joe.jpg' />
+                {/* <Comment.Avatar as='a' src='/whwhwhw/joe.jpg' /> */}
                 <Comment.Content>
                   <Comment.Author as='a'>
-                    Some Specific User
+                    {msg.user.name}
                   </Comment.Author>
                   <Comment.Metadata>
                     <div>AM 8:54</div>

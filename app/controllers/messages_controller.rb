@@ -4,14 +4,12 @@ class MessagesController < ApplicationController
 
   # GET /messages
   def index
-    puts params.inspect
     if !(params[:chatroom_id].present?)
       @messages = Message.all
     else
       @messages = Message.where(chatroom_id: params[:chatroom_id])
-      puts @messages.inspect
     end
-    render json: @messages
+    render json: @messages, :include => :user
   end
 
   # GET /messages/1
