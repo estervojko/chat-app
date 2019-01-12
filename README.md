@@ -4,6 +4,8 @@
 
 https://chat-app-ester.herokuapp.com/
 
+***Note: Users have to be logged in to send messages for now***
+
 This chat application concept is a full-stack CRUD, that is built with React and Ruby on Rails. It demonstrates learning, using and integrating various technologies in a short period of time. Users can login in using the credentials below:
 
  username: gates@gmail.com
@@ -30,3 +32,23 @@ When clicking post, the Action Cable feature of Ruby on Rails will broadcast tha
 A user has many messages and and a message belongs to a user. A chatroom has many messages and a message belongs to a chatroom.
 
 ![Entity-Relationship Diagram](https://github.com/estervojko/chat-app/blob/master/assets/_Entity%20Relationship%20Diagram%20Example.jpeg?raw=true)
+
+***Wireframe***
+![Wireframe](https://github.com/estervojko/chat-app/blob/master/assets/Wireframe.jpg?raw=true)
+
+***Minimum Viable Product (M.V.P)***
+For my M.V.P I would like to implement and deploy what's in the wireframe. In other words, users can login, update the profile
+picture, and view various chatrooms. Users can interact with each other in real time by exchanging messages in a particular chatroom.
+
+***Post MVP features***
+
+As a Post MVP feature I would like to add these features:
+- Logged in users can view other user's profile
+- Users can delete messages in real time
+- Register button
+- Improve overall styling
+
+***Code example***
+
+This app takes advantage of the action cable feature of Rails, which allows us to use the web-sockets protocol and exchange live data between the client and the server. It uses the publisher/subscriber pattern where publishers and subscribers interact through channels. Consumers need to initiate and identify the connection on their side. I used ActionCable Provider for React, which can be found here:
+https://www.npmjs.com/package/react-actioncable-provider
