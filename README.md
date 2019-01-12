@@ -1,6 +1,6 @@
 ***Chat App using Web Sockets.***
 
-Link to the deployed project:
+*Link to the deployed project:*
 
 https://chat-app-ester.herokuapp.com/
 
@@ -15,16 +15,18 @@ When clicking post, the Action Cable feature of Ruby on Rails will broadcast tha
 
 ***Technologies Used***
 
--React
--Semantic UI
--Ruby on Rails
+- React
+- Semantic UI
+- Ruby on Rails
 
 ***Features List***
 
--Login/Logout
--Users can view their profile and change their profile picture
--Users can post other messages
+- Login/Logout
+- Users can view their profile and change their profile picture
+- Users can post other messages
 
 ***Entity-Relationship Diagram***
 
 A user has many messages and and a message belongs to a user. A chatroom has many messages and a message belongs to a chatroom.
+
+![Entity-Relationship Diagram](https://github.com/estervojko/chat-app/blob/master/assets/_Entity%20Relationship%20Diagram%20Example.jpeg?raw=true)
