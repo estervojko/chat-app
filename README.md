@@ -78,3 +78,16 @@ handleReceivedMessage(response){
 `git clone https://github.com/estervojko/chat-app.git`
 - Run `bundle install` inside the cloned repo
 - `cd` into the client folder and run `npm install` to install client dependencies
+- Go to `<your_cloned_repo>/client/services/url.js`
+- Delete what's there and replace it with this:
+
+``` javascript
+export const API_ROOT = 'https://chat-app-ester.herokuapp.com/api';
+export const API_WS_ROOT = 'wss://chat-app-ester.herokuapp.com/api/cable';
+export const HEADERS = {
+  'Content-Type': 'application/json',
+  Accept: 'application/json',
+};
+```
+
+- Run `rails s` in the terminal to start the server
