@@ -18,6 +18,7 @@ When clicking post, the Action Cable feature of Ruby on Rails will broadcast tha
 ***Technologies Used***
 
 - React
+- React Router dom
 - Semantic UI
 - Ruby on Rails
 
@@ -90,4 +91,4 @@ export const HEADERS = {
 };
 ```
 
-- Run `rails s` in the terminal to start the server
+- Run `rails start` in the terminal to start the development server
