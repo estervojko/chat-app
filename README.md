@@ -90,5 +90,4 @@ export const HEADERS = {
   Accept: 'application/json',
 };
 ```
-
 - Run `rails start` in the terminal to start the development server
