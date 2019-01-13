@@ -72,7 +72,6 @@ handleReceivedMessage(response){
   }
 }
 ```
-
 ***Installation Instructions***
 
 - Clone from my repo running
