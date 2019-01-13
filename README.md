@@ -32,7 +32,6 @@ When clicking post, the Action Cable feature of Ruby on Rails will broadcast tha
 
 A user has many messages and and a message belongs to a user. A chatroom has many messages and a message belongs to a chatroom.
 
-
 ![Entity-Relationship Diagram](https://github.com/estervojko/chat-app/blob/master/assets/_Entity%20Relationship%20Diagram.jpeg?raw=true)
 
 ***Wireframe***
