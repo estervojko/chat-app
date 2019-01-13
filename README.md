@@ -32,7 +32,6 @@ When clicking post, the Action Cable feature of Ruby on Rails will broadcast tha
 
 A user has many messages and and a message belongs to a user. A chatroom has many messages and a message belongs to a chatroom.
 
-
 ![Entity-Relationship Diagram](https://github.com/estervojko/chat-app/blob/master/assets/_Entity%20Relationship%20Diagram.jpeg?raw=true)
 
 ***Wireframe***
@@ -84,8 +83,8 @@ handleReceivedMessage(response){
 - Delete what's there and replace it with this:
 
 ``` javascript
-export const API_ROOT = 'https://chat-app-ester.herokuapp.com/api';
-export const API_WS_ROOT = 'wss://chat-app-ester.herokuapp.com/api/cable';
+export const API_ROOT = 'http://localhost:3000/api';
+export const API_WS_ROOT = 'ws://localhost:3001/api/cable';
 export const HEADERS = {
   'Content-Type': 'application/json',
   Accept: 'application/json',
