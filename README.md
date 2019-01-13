@@ -8,8 +8,8 @@ https://chat-app-ester.herokuapp.com/
 
 This chat application concept is a full-stack CRUD, that is built with React and Ruby on Rails. It demonstrates learning, using and integrating various technologies in a short period of time. Users can login in using the credentials below:
 
- username: gates@gmail.com
- password: test
+- username: gates@gmail.com
+- password: test
 
 Users have to login before they can post. After being logged in users are directed to the profile page, where they can update their profile picture. The chatroom button will take you on the chatrooms screen. On the left, logged in users can click on a chatroom, and the message interactions between the participating users will be displayed on the right, where they can also choose to post a message.
 
@@ -51,4 +51,30 @@ As a Post MVP feature I would like to add these features:
 ***Code example***
 
 This app takes advantage of the action cable feature of Rails, which allows us to use the web-sockets protocol and exchange live data between the client and the server. It uses the publisher/subscriber pattern where publishers and subscribers interact through channels. Consumers need to initiate and identify the connection on their side. I used ActionCable Provider for React, which can be found here:
+
 https://www.npmjs.com/package/react-actioncable-provider
+
+Action Cable Provider uses a `handleReceivedMessage(response)`
+to deal with broadcasted data from the server, which I have implemented as below:
+
+```javascript
+//handle broadcasted message
+handleReceivedMessage(response){
+  //if the id of the chatroom currently displayed is equal to //the chatroom_id of the response, put the response in state.
+  //Response is the message broadcasted back to the client
+  if( this.state.activeRoom === response.chatroom_id){
+    this.setState((prevState) => (
+      {
+        messages: [...prevState.messages, response]
+      })
+    )
+  }
+}
+```
+
+***Installation Instructions***
+
+- Clone from my repo running
+`git clone https://github.com/estervojko/chat-app.git`
+- Run `bundle install` inside the cloned repo
+- `cd` into the client folder and run `npm install` to install client dependencies
